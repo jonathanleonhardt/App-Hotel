@@ -1,25 +1,25 @@
-import { AuthGuard } from "./guards/auth.guard";
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { AutoLoginGuard } from "./guards/auto-login.guard";
+import { AuthGuard } from './guards/auth.guard';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AutoLoginGuard } from './guards/auto-login.guard';
 
 const routes: Routes = [
   {
-    path: "home",
+    path: 'home',
     loadChildren: () =>
-      import("./home/home.module").then((m) => m.HomePageModule),
+      import('./home/home.module').then((m) => m.HomePageModule),
     canLoad: [AuthGuard],
   },
   {
-    path: "login",
+    path: 'login',
     loadChildren: () =>
-      import("./pages/login/login.module").then((m) => m.LoginPageModule),
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
     canLoad: [AutoLoginGuard], // Check if we should show the introduction or forward to inside
   },
   {
-    path: "",
-    redirectTo: "/login",
-    pathMatch: "full",
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
   },
 ];
 
