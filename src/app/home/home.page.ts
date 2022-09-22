@@ -1,4 +1,4 @@
-import { AuthenticationService } from './../services/authentication.service';
+import { SystemService } from '../services/system.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
   constructor(
-    private authService: AuthenticationService,
+    private authService: SystemService,
     private router: Router
   ) {}
 

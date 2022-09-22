@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Painel do Hospede</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header >QUARTOS</ion-list-header>
+    <ion-item *ngFor="let item of roomList">
+      <ion-label>
+        <p>{{ item.id }} - Tipo: {{ item.type }} | {{ item.status }}</p>
+      </ion-label>
+      <ion-button shape="round" (click)="reserveRoom(item)" [disabled]="item.status === 'confirmado'">
+        {{ item.status === 'reservado' ? 'cancelar' : 'reservar'}}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="full" (click)="logout()">Logout</ion-button>
+</ion-content>

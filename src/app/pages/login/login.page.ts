@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { AuthenticationService } from './../../services/authentication.service';
+import { SystemService } from '../../services/system.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
@@ -15,19 +15,18 @@ export class LoginPage implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		private authService: AuthenticationService,
+		private authService: SystemService,
 		private router: Router,
 		private loadingController: LoadingController
 	) {}
 
 	ngOnInit() {
 		this.credentials = this.fb.group({
-			email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
-			password: ['cityslicka', [Validators.required, Validators.minLength(6)]]
+			email: ['jonathan@unisinos.br', [Validators.required, Validators.email]],
+			password: ['abc321', [Validators.required, Validators.minLength(6)]]
 		});
 	}
 
-	// Easy access for form fields
 	get email() {
 		return this.credentials.get('email');
 	}
@@ -39,10 +38,15 @@ export class LoginPage implements OnInit {
 	async login() {
 		const loading = await this.loadingController.create();
 		await loading.present();
+		const userRole = this.authService.login( this.credentials.value );
 
-		if (this.authService.login( this.credentials.value ) ) {
+		if ( userRole !== null ) {
 			await loading.dismiss();
-			this.router.navigateByUrl('/home', { replaceUrl: true });
+			if ( userRole === 'atendente' ) {
+				this.router.navigateByUrl( '/atendente', { replaceUrl: true } );
+			} else {
+				this.router.navigateByUrl( '/hospede', { replaceUrl: true } );
+			}
 		}
 	}
 }
